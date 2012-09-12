@@ -34,6 +34,8 @@ int main(int argc, char *argv[])
     signal(SIGPIPE, sigpipe);
     char buf[1024];
     ssize_t size;
+    if (verbose)
+        fprintf(stderr, "Starting read-write loop...\n");
     while (!nopipe && (size = read(0, buf, sizeof(buf))))
     {
         if (size < 0)
@@ -66,16 +68,23 @@ int main(int argc, char *argv[])
             written += w;
         }
     }
-    while ((size = read(STDIN_FILENO, buf, sizeof(buf))))
+    if (size)
     {
-        if (size < 0)
-        {
-            perror("read");
-            return EXIT_FAILURE;
-        }
         if (verbose)
-            fprintf(stderr, "Discarded %zd bytes.\n", size);
+            fprintf(stderr, "Starting discard loop...\n");
+        while ((size = read(STDIN_FILENO, buf, sizeof(buf))))
+        {
+            if (size < 0)
+            {
+                perror("read");
+                return EXIT_FAILURE;
+            }
+            if (verbose)
+                fprintf(stderr, "Discarded %zd bytes.\n", size);
+        }
     }
+    if (verbose)
+        fprintf(stderr, "STDIN is empty.\n");
     return EXIT_SUCCESS;
 }
 
