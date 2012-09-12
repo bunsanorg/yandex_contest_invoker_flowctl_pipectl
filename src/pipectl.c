@@ -34,15 +34,14 @@ int main(int argc, char *argv[])
     signal(SIGPIPE, sigpipe);
     char buf[1024];
     ssize_t size;
-    while (!nopipe)
+    while (!nopipe && (size = read(0, buf, sizeof(buf))))
     {
-        ssize_t written = 0;
-        size = read(0, buf, sizeof(buf));
         if (size < 0)
         {
             perror("read");
             return EXIT_FAILURE;
         }
+        ssize_t written = 0;
         if (verbose)
             fprintf(stderr, "Read %zd bytes.\n", size);
         while (!nopipe && written < size)
