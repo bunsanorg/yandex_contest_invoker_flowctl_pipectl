@@ -11,7 +11,7 @@ add_executable(${PROJECT_NAME}
     src/pipectl.c
 )
 
-# installation
+# Installation
 install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
