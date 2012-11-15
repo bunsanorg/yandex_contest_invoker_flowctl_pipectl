@@ -32,11 +32,11 @@ int main(int argc, char *argv[])
         }
     }
     signal(SIGPIPE, sigpipe);
-    char buf[1024];
+    char buf[BUFSIZ];
     ssize_t size;
     if (verbose)
         fprintf(stderr, "Starting read-write loop...\n");
-    while (!nopipe && (size = read(0, buf, sizeof(buf))))
+    while (!nopipe && (size = read(0, buf, BUFSIZ)))
     {
         if (size < 0)
         {
