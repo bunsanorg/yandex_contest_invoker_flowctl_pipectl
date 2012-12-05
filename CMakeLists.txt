@@ -6,13 +6,8 @@ cmake_minimum_required(VERSION 2.8)
 
 include(YandexContestCommon)
 
-# Targets
-add_executable(${PROJECT_NAME}
+bunsan_add_executable(${PROJECT_NAME}
     src/pipectl.c
 )
 
-# Installation
-install(TARGETS ${PROJECT_NAME}
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib)
+bunsan_install_targets(${PROJECT_NAME})
