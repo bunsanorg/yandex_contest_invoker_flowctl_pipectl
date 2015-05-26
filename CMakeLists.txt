@@ -4,7 +4,11 @@ include(${CMAKE_SOURCE_DIR}/system-config.cmake OPTIONAL)
 
 project(yandex_contest_invoker_flowctl_pipectl)
 
-find_package(BunsanCMake CONFIG REQUIRED)
+if(BunsanCMakeBuiltin)
+    BunsanCMakeLoad()
+else()
+    find_package(BunsanCMake CONFIG REQUIRED)
+endif()
 
 bunsan_add_executable(${PROJECT_NAME}
     src/pipectl.c
